@@ -1,0 +1,13 @@
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: black-friday-db-1
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: omkumar
+      POSTGRES_DB: cinema_db
+    ports:
+      - "5435:5432" # Use 5435 to bypass the 'ghost' on 5432/5433
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    restart: unless-stopped
