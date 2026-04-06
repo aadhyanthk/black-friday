@@ -47,6 +47,17 @@ class CheckoutPayload(BaseModel):
     item_id: int
     user_identifier: str
 
+@app.get("/inventory/{item_id}")
+async def get_stock(item_id: int):
+    async with db_pool.acquire() as connection:
+        row = await connection.fetchrow(
+            "SELECT item_name, stock_count FROM public.inventory WHERE id = $1",
+            item_id
+        )
+        if not row:
+            raise HTTPException(status_code=404, detail="Item not found")
+        return {"item_name": row['item_name'], "stock_count": row['stock_count']}
+
 @app.post("/checkout")
 async def process_checkout(payload: CheckoutPayload):
     async with db_pool.acquire() as connection:
