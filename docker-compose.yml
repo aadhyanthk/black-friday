@@ -4,9 +4,9 @@ services:
   db:
     image: postgres:15-alpine
     environment:
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: securepassword
-      POSTGRES_DB: theatre_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: omkumar
+      POSTGRES_DB: cinema_db
     ports:
       - "5432:5432"
     volumes:
